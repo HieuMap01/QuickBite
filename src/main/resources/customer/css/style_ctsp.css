@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.single-product {
+    padding: 100px 0;
+}
+
+.single-product-content {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+/* Giá sản phẩm */
+.product-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #205f00;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.strike-price {
+    color: #777;
+    font-size: 18px;
+    display: inline-block;
+}
+
+/* Form chọn số lượng và nút giỏ hàng */
+.single-product-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.single-product-form input[type="number"] {
+    padding: 8px 12px;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Nút thêm vào giỏ hàng */
+.cart-btn {
+    background-color: #205f00;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cart-btn:hover {
+    background-color: #174700;
+}
+
+/* Danh sách chia sẻ */
+.product-share {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.product-share li a {
+    color: #333;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.product-share li a:hover {
+    color: #205f00;
+}
+
+/* Ảnh sản phẩm */
+.single-product-img img {
+    max-width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,103 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+body {
+  background-image: url('../assets/Home/images/hero.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.auth-page {
+  width: 100%;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.auth-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 40px 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+
+.auth-container h1 {
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #205f00;
+}
+
+.auth-container .subtitle {
+  font-size: 15px;
+  color: #205f00;
+  margin-bottom: 25px;
+}
+
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input {
+  padding: 14px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container input:focus {
+  outline: none;
+  border-color: #5cb85c;
+  box-shadow: 0 0 5px rgba(91, 184, 91, 0.5);
+}
+
+.auth-btn {
+  padding: 14px;
+  background-color: #205f00;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-btn:hover {
+  background-color: #3a9612;
+}
+
+.auth-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.auth-link a {
+  color: #205f00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
