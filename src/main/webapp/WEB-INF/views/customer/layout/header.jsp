@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/common/variables.jsp" %>
 
-<header class="bg-custom text-white py-2">
+<header class="bg-custom text-white py-1">
   <div class="container">
     <div class="row align-items-center">
 
@@ -18,7 +18,7 @@
       <!-- Cột 2: Logo (giữa) -->
       <div class="col-md-4 text-center">
         <a href="${env}/home">
-          <img src="${env}/customer/assets/Home/images/Logo.png" alt="Company Logo" height="40">
+			<img src="${env}/customer/assets/Home/images/Logo_demo.png" alt="Company Logo" class="logo">
         </a>
       </div>
 

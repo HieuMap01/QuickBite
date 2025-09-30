@@ -3,7 +3,7 @@
 	
 	<footer class="footer">
 	        <div class="footer-container">
-	          <img src="${env }/customer/assets/Home/images/logo_03.png" alt="Company Logo" class="logo" />
+	          <img src="${env }/customer/assets/Home/images/Logo_demo.png" alt="Company Logo" class="logo" />
 	          <h2>AMERICAN FOOD</h2>
 	          <p>The Best Taste Food</p>
 

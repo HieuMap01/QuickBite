@@ -3,18 +3,11 @@ package vn.devpro.minhhieu.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_user")
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class User extends BaseModel {
 
 	@Column(name = "username", length = 120, nullable = false)
 	private String username;
@@ -43,12 +36,13 @@ public class User {
 	@Column(name = "status")
 	private Boolean status = true; // mặc định active
 
-	// ===== Constructors =====
 	public User() {
+		super();
 	}
 
 	public User(String username, String password, String name, String email, String mobile, String address,
 			String avatar, String description, Boolean status) {
+		super();
 		this.username = username;
 		this.password = password;
 		this.name = name;
@@ -58,15 +52,6 @@ public class User {
 		this.avatar = avatar;
 		this.description = description;
 		this.status = status;
-	}
-
-	// ===== Getters & Setters =====
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getUsername() {

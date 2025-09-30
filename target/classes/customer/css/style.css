@@ -51,6 +51,15 @@
 .search-btn:hover {
   cursor: pointer;
 }
+
+.logo {
+  max-height: 80px;  /* logo to hơn so với 40px nhưng không vượt quá 50 */
+  width: auto;
+  display: block;
+  margin: 0 auto;    /* giữ căn giữa */
+}
+
+
 .hero-banner {
   background-image: url('../assets/Home/images/hero.png');
   background-size: cover;
@@ -524,7 +533,8 @@ button {
 }
 
 .footer .logo {
-  width: 60px;
+  max-height: 80px;
+  width: auto;
   margin-bottom: 10px;
 }
 
