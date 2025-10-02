@@ -1,6 +1,12 @@
 // vn.devpro.minhhieu.service.impl.UserServiceImpl.java
 package vn.devpro.minhhieu.service.impl;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +20,10 @@ public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
 
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	@Autowired
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -32,4 +42,22 @@ public class UserServiceImpl implements UserService {
 	public User save(User user) {
 		return userRepository.save(user);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findAllActive() {
+		// Lấy danh sách tất cả user còn đang active trong hệ thống
+		String sql = "SELECT * FROM tbl_user WHERE status = 1";
+		return entityManager.createNativeQuery(sql, User.class).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> findAdminUsers() {
+		// Lấy danh sách tất cả user có quyền ADMIN.
+		String sql = "SELECT * FROM tbl_user u, tbl_user_role ur, "
+				+ "tbl_role r WHERE u.id=ur.user_id AND ur.role_id = r.id AND r.name='ADMIN'";
+		return entityManager.createNativeQuery(sql, User.class).getResultList();
+	}
+
 }

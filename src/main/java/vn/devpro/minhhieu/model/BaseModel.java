@@ -22,8 +22,8 @@ public abstract class BaseModel {
 	private Date createDate;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(name = "update_date", nullable = true)
-	private Date update_date;
+	@Column(name = "updateDate", nullable = true)
+	private Date updateDate;
 
 	@Column(name = "status", nullable = true)
 	private Boolean status = Boolean.TRUE;
@@ -32,11 +32,11 @@ public abstract class BaseModel {
 		super();
 	}
 
-	public BaseModel(Integer id, Date createDate, Date update_date, Boolean status) {
+	public BaseModel(Integer id, Date createDate, Date updateDate, Boolean status) {
 		super();
 		this.id = id;
 		this.createDate = createDate;
-		this.update_date = update_date;
+		this.updateDate = updateDate;
 		this.status = status;
 	}
 
@@ -56,12 +56,12 @@ public abstract class BaseModel {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdate_date() {
-		return update_date;
+	public Date getupdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
+	public void setupdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public Boolean getStatus() {

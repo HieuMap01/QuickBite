@@ -91,7 +91,7 @@
 												<div class="form-group mb-4">
 			                                        <label for="category">Create by</label>
 			                                        <sf:select path="userCreateCategory.id" class="form-control" id="userCreateCategory">
-			                                            <sf:options items="${env }" itemValue="id" itemLabel="username"></sf:options>
+			                                            <sf:options items="${users }" itemValue="id" itemLabel="username"></sf:options>
 			                                        </sf:select>
                                         		</div>
 	                                    	</div>
@@ -100,7 +100,7 @@
 												<div class="form-group mb-4">
 			                                        <label for="category">Update by</label>
 			                                        <sf:select path="userUpdateCategory.id" class="form-control" id="userUpdateCategory">
-			                                            <sf:options items="${env }" itemValue="id" itemLabel="username"></sf:options>
+			                                            <sf:options items="${users }" itemValue="id" itemLabel="username"></sf:options>
 			                                        </sf:select>
                                         		</div>
 	                                    	</div>
