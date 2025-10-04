@@ -18,10 +18,12 @@ public class Category extends BaseModel {
 	@Column(name = "description", length = 500, nullable = true)
 	private String description;
 
+	// -------- Mapping many-to-one: category-to-user-create----------------
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "create_by", referencedColumnName = "id")
 	private User userCreateCategory;
 
+	// -------- Mapping many-to-one: category-to-user-update----------------
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "update_by", referencedColumnName = "id")
 	private User userUpdateCategory;
