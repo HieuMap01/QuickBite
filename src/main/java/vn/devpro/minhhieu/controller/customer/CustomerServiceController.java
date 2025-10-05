@@ -1,6 +1,7 @@
 package vn.devpro.minhhieu.controller.customer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import vn.devpro.minhhieu.controller.BaseController;
 import vn.devpro.minhhieu.model.Product;
+import vn.devpro.minhhieu.service.CategoryService;
 import vn.devpro.minhhieu.service.ProductService;
 
 @Controller
@@ -19,10 +21,14 @@ public class CustomerServiceController extends BaseController {
 	@Autowired
 	ProductService ps;
 
+	@Autowired
+	CategoryService cs;
+
 	@GetMapping
 	public String service(Model model) {
+		List<vn.devpro.minhhieu.model.Category> categories = cs.findAllActive();
 		List<Product> products = ps.findAllActive();
-		model.addAttribute("products", products);
+		model.addAllAttributes(Map.of("products", products, "category", categories));
 		return "customer/pages_Service";
 	}
 

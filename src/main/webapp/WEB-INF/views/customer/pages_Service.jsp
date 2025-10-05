@@ -70,15 +70,18 @@
         <div class="row">
             <!-- Filter bên trái -->
             <div class="col-md-3">
-                <div class="filter-menu">
-                    <h4 class="filter-title">Danh Mục</h4>
-                    <ul class="filter-list list-unstyled">
-                        <li class="active" data-filter="*">Tất Cả</li>
-                        <li data-filter=".food">Đồ Ăn</li>
-                        <li data-filter=".drinking">Đồ Uống</li>
-                        <li data-filter=".desert">Tráng Miệng</li>
-                    </ul>
-                </div>
+				<div class="filter-menu">
+				    <h4 class="filter-title">Danh Mục</h4>
+				    <ul class="filter-list list-unstyled">
+				        <li class="active" data-filter="*">Tất Cả</li>
+				        <c:forEach var="cat" items="${categories}">
+				            <li data-filter=".${fn:toLowerCase(cat.name)}">
+				                ${cat.name}
+				            </li>
+				        </c:forEach>
+				    </ul>
+				</div>
+
             </div>
 
             <!-- Danh sách sản phẩm -->
@@ -87,8 +90,8 @@
                     <c:choose>
                         <c:when test="${not empty products}">
                             <c:forEach var="p" items="${products}">
-                                <c:set var="catName" value="${p.category != null ? fn:toLowerCase(p.category.name) : 'food'}" />
-                                <div class="col-lg-4 col-md-6 text-center ${catName}">
+								<c:set var="catName" value="${p.category != null ? fn:toLowerCase(p.category.name) : 'uncategorized'}" />
+								<div class="col-lg-4 col-md-6 text-center ${catName}">
                                     <div class="single-product-item">
                                         <div class="product-image">
                                             <a href="${env}/product/${p.id}">
