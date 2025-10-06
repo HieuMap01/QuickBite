@@ -26,11 +26,11 @@ public abstract class BaseService<Model extends BaseModel> {
 
 	// lấy tất cả bản ghi trong 1 bảng
 	@SuppressWarnings("unchecked") // chỉ để tránh cảnh báo ép kiểu.
-	public List<Model> fillAll() {
+	public List<Model> findAll() {
 		Table table = clazz().getAnnotation(Table.class);
 		// chạy native SQL -> query toàn bộ dữ liệu trong bảng -> clazz() → chỉ định
 		// kiểu entity để Hibernate map kết quả SQL thành object Java.
-		return (List<Model>) entityManager.createNativeQuery("SELECT * FROM" + table.name(), clazz()).getResultList();
+		return (List<Model>) entityManager.createNativeQuery("SELECT * FROM " + table.name(), clazz()).getResultList();
 	}
 
 	// thêm mới hoặc sửa bản ghi

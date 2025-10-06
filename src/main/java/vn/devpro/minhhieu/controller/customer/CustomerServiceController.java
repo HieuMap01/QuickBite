@@ -28,7 +28,7 @@ public class CustomerServiceController extends BaseController {
 	public String service(Model model) {
 		List<vn.devpro.minhhieu.model.Category> categories = cs.findAllActive();
 		List<Product> products = ps.findAllActive();
-		model.addAllAttributes(Map.of("products", products, "category", categories));
+		model.addAllAttributes(Map.of("products", products, "categories", categories));
 		return "customer/pages_Service";
 	}
 

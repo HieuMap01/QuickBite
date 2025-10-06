@@ -6,7 +6,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-
+	
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -166,7 +166,7 @@
 											class="table table-striped table-bordered no-wrap">
 											<thead>
 												<tr align="center">
-													<th scope="col">No.</th>
+													<!--<th scope="col">No.</th>-->
 													<th scope="col">Id</th>
 													<th scope="col">Category</th>
 													<th scope="col">Name</th>
@@ -189,7 +189,7 @@
 												<c:forEach var="product" items="${products }"
 													varStatus="loop">
 													<tr>
-														<th scope="row">${loop.index + 1 }</th>
+														<!--<th scope="row">${loop.index + 1 }</th>-->
 														<td>${product.id }</td>
 														<td>${product.category.name }</td>
 														<td>${product.name }</td>
@@ -242,7 +242,7 @@
 											</tbody>
 											<tfoot>
 												<tr align="center">
-													<th scope="col">No.</th>
+													<!--<th scope="col">No.</th>-->
 													<th scope="col">Id</th>
 													<th scope="col">Category</th>
 													<th scope="col">Name</th>

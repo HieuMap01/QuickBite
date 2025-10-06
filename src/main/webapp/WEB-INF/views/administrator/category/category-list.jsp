@@ -134,7 +134,8 @@
                                     <table id="zero_config" class="table table-striped table-bordered no-wrap">
                                         <thead>
                                             <tr>
-                                            	<th scope="col">No.</th>
+                                            	<!-- 
+												<th scope="col">No.</th>-->
                                                 <th scope="col">Id</th>
                                                 <th scope="col">Name</th>    
                                                 <th scope="col">Create by</th>
@@ -149,7 +150,7 @@
                                         <tbody>
                                         	<c:forEach var="category" items="${categories }" varStatus="loop">
                                         		<tr>
-		                                        	<td>${loop.index + 1 }</td>
+		                                        	<!--<td>${loop.index + 1 }</td>-->
 		                                        	<td>${category.id }</td>
 		                                        	<td>${category.name }</td>
 		                                        	<td>${category.userCreateCategory.username }</td>
@@ -183,7 +184,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                            	<th scope="col">No.</th>
+                                            	<!--<th scope="col">No.</th>-->
                                                 <th scope="col">Id</th>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Create by</th>
