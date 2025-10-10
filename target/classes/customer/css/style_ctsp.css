@@ -84,3 +84,12 @@
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+#productCarousel .carousel-item img{width:100%;height:460px;object-fit:cover;border-radius:12px}
+#productCarousel .carousel-control-prev,#productCarousel .carousel-control-next{
+  width:44px;height:44px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);border-radius:50%;opacity:.95
+}
+#productCarousel .carousel-control-prev:hover,#productCarousel .carousel-control-next:hover{background:rgba(0,0,0,.5)}
+#productCarousel .carousel-control-prev-icon,#productCarousel .carousel-control-next-icon{filter:invert(1) grayscale(1)}
+#productCarousel .carousel-indicators li{width:8px;height:8px;border-radius:50%}
+.thumb{width:80px;height:80px;object-fit:cover;cursor:pointer;border-radius:8px}

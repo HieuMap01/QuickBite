@@ -12,68 +12,18 @@
     <title>Danh sách sản phẩm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="${env}/customer/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${env}/customer/css/style.css">
-    <link rel="stylesheet" href="${env}/customer/css/style_service.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<%-- CSS --%>
+	<jsp:include page="/WEB-INF/views/customer/layout/css.jsp"></jsp:include>
+
 
     <style>
-        .single-product-item {
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 14px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: #fff;
-            margin-bottom: 20px;
-        }
-        .single-product-item .product-image img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
 
-        /* Giá: có sale thì hiện giá gốc gạch + giá mới đỏ */
-        .product-price { margin-top: 6px; }
-        .product-price .old {
-            text-decoration: line-through;
-            color: #888;
-            margin-right: 8px;
-            font-weight: 500;
-        }
-        .product-price .new {
-            color: #e53935;
-            font-weight: 700;
-        }
 
-        /* Nút thêm vào giỏ: xanh lá */
-        .cart-btn {
-            background: #608b14;
-            color: #fff;
-            border: none;
-            padding: 10px 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: filter .2s ease;
-        }
-        .cart-btn:hover { filter: brightness(0.92); }
-
-        .filter-menu .filter-list li {
-            cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 8px;
-        }
-        .filter-menu .filter-list li.active {
-            background: #608b14;
-            color: #fff;
-        }
     </style>
 </head>
 
 <body>
+	<%@ include file="/WEB-INF/views/common/variables.jsp" %>
     <jsp:include page="/WEB-INF/views/customer/layout/header.jsp"/>
     <jsp:include page="/WEB-INF/views/customer/layout/nav.jsp"/>
 
@@ -83,15 +33,17 @@
             <div class="col-md-3">
                 <div class="filter-menu">
                     <h4 class="filter-title">Danh Mục</h4>
-                    <ul class="filter-list list-unstyled">
-                        <li class="active" data-filter="*">Tất Cả</li>
-                        <!-- Dùng ID để tạo class/filter an toàn -->
-                        <c:forEach var="cat" items="${categories}">
-                            <li data-filter=".cat${cat.id}">
-                                ${cat.name}
-                            </li>
-                        </c:forEach>
-                    </ul>
+					<ul class="filter-list list-unstyled">
+					  <li class="${empty activeCatId ? 'active' : ''}">
+					    <a href="${env}/service">Tất Cả</a>
+					  </li>
+					  <c:forEach var="cat" items="${categories}">
+					    <li class="${activeCatId == cat.id ? 'active' : ''}">
+					      <a href="${env}/service?catId=${cat.id}">${cat.name}</a>
+					    </li>
+					  </c:forEach>
+					</ul>
+
                 </div>
             </div>
 
@@ -130,12 +82,20 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
+										<c:choose>
+										    <c:when test="${p.salePrice ne null and p.salePrice gt 0 and p.salePrice lt p.price}">
+										      <c:set var="displayPrice" value="${p.salePrice}" />
+										    </c:when>
+										    <c:otherwise>
+										      <c:set var="displayPrice" value="${p.price}" />
+										    </c:otherwise>
+									   </c:choose>
 
                                         <button class="cart-btn"
                                             onclick="addToCart(
                                                 ${p.id},
                                                 1,
-                                                ${p.salePrice != null and p.salePrice gt 0 ? p.salePrice : p.price},
+                                                ${displayPrice},
                                                 '${fn:escapeXml(p.name)}',
                                                 '${p.avatar}'
                                             )">
@@ -157,29 +117,44 @@
     </div>
 
     <jsp:include page="/WEB-INF/views/customer/layout/footer.jsp"/>
+	<%-- JS --%>
+	<jsp:include page="/WEB-INF/views/customer/layout/js.jsp"></jsp:include>
 
-    <script>
-        // Filter theo danh mục (dựa trên class .cat<ID>)
-        document.addEventListener("DOMContentLoaded", function () {
-            const filterButtons = document.querySelectorAll(".filter-list li");
-            const products = document.querySelectorAll(".product-lists > .product-card");
 
-            filterButtons.forEach(button => {
-                button.addEventListener("click", function () {
-                    filterButtons.forEach(btn => btn.classList.remove("active"));
-                    this.classList.add("active");
 
-                    const filterValue = this.getAttribute("data-filter"); // "*" hoặc ".cat5"
-                    products.forEach(product => {
-                        if (filterValue === "*" || product.classList.contains(filterValue.slice(1))) {
-                            product.style.display = "";  // dùng rỗng để Bootstrap tự layout
-                        } else {
-                            product.style.display = "none";
-                        }
-                    });
-                });
-            });
-        });
-    </script>
+	<!-- Add to cart -->
+	<script type="text/javascript">
+		addToCart = function(_productId, _quantity, _price, _productName, _avatar) {		
+			alert("Thêm "  + _quantity + " sản phẩm '" + _productName + "' vào giỏ hàng ");
+			let data = {
+				id: _productId, //lay theo id
+				quantity: _quantity,
+				price: _price,
+				name: _productName,
+				avatar: _avatar
+			};
+				
+			//$ === jQuery
+			jQuery.ajax({
+				url : "/add-to-cart",
+				type : "POST",
+				contentType: "application/json",
+				data : JSON.stringify(data),
+				dataType : "json", //Kieu du lieu tra ve tu controller la json
+				
+				success : function(jsonResult) {
+					alert(jsonResult.code + ": " + jsonResult.message);
+					let totalProducts = jsonResult.totalCartProducts;
+					$("#totalCartProducts").html(totalProducts);
+				},
+				
+				error : function(jqXhr, textStatus, errorMessage) {
+					alert(jsonResult.code + ': Đã có lỗi xảy ra...!')
+				},
+			});
+		}
+	</script>
+
+
 </body>
 </html>

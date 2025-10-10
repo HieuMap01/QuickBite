@@ -5,66 +5,116 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.filter-menu {
-  background-color: #f8f8f8;
-  padding: 20px;
+/* ===== Card sản phẩm ===== */
+.single-product-item {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 20px;
+}
+.single-product-item .product-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
   border-radius: 10px;
-  border: 1px solid #ddd;
 }
 
-.filter-title {
-  font-size: 20px;
-  margin-bottom: 15px;
+/* Tên sản phẩm */
+.single-product-item h3 {
+  font-size: 18px;
   font-weight: 600;
-  color: #205f00;
+  color: #222;
+  margin: 12px 0 6px;
+  line-height: 1.4;
+  min-height: 44px;          /* giúp các card đều nhau */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
-.filter-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Giá sản phẩm */
+.product-price {
+  margin-top: 4px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+.product-price .old {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+  font-weight: 500;
+  font-size: 15px;
+}
+.product-price .new {
+  color: #e53935;
+  font-weight: 700;
+  font-size: 17px;
+}
+/* Khi không có sale (chỉ 1 giá) */
+.product-price > span {
+  color: #222;
+  font-weight: 600;
+  font-size: 17px;
 }
 
-.filter-list li {
-  padding: 10px 15px;
-  cursor: pointer;
-  border-bottom: 1px solid #e1e1e1;
-  transition: background 0.3s, color 0.3s;
-}
-
-.filter-list li:hover,
-.filter-list li.active {
-  background-color: #205f00;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-.single-product-item {
-  background: #fff;
-  padding: 15px;
-  margin-bottom: 30px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  transition: box-shadow 0.3s;
-}
-
-.single-product-item:hover {
-  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-}
-
+/* Nút thêm vào giỏ */
 .cart-btn {
-  background-color: #205f00;
+  background: #608b14;
   color: #fff;
-  padding: 8px 16px;
   border: none;
-  border-radius: 25px;
-  font-family: 'Poppins', sans-serif;
-  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
   cursor: pointer;
+  transition: filter .2s ease;
+  width: 100%;
+}
+.cart-btn:hover { filter: brightness(0.92); }
+
+/* ===== Sidebar danh mục ===== */
+.filter-title {
+  color: #608b14;        /* màu tiêu đề “Danh Mục” */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-.cart-btn:hover {
-  background-color: #205f00;
+.filter-list { padding: 0; margin: 0; }
+.filter-list li { list-style: none; margin-bottom: 6px; }
+
+/* A chiếm full khối -> click cả ô */
+.filter-list li a {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: black;           /* chữ xanh thống nhất */
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  background: #fff;
+  border: 1px solid #eef1e7; /* đường viền nhẹ */
 }
+
+/* Hover nhẹ */
+.filter-list li a:hover {
+  background-color: #edf6e0;  /* nền xanh nhạt */
+  color: #4d7510;
+}
+
+/* Trạng thái đang chọn */
+.filter-list li.active a {
+  background-color: #608b14;  /* nền xanh đậm */
+  color: #fff;                /* chữ trắng nổi bật */
+  font-weight: 600;
+  border-color: #608b14;
+}
+
+/* Loại bỏ xung đột kiểu cũ (nếu vẫn còn rule này ở nơi khác) */
+.filter-menu .filter-list li.active { background: transparent; color: inherit; }

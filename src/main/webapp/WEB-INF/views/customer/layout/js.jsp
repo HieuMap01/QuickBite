@@ -5,3 +5,10 @@
 
 <!-- contact-->
 <script src="${env }/customer/js/app.js"></script>
+
+<!-- jQuery FULL (có AJAX) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- (tuỳ) Bootstrap JS sau jQuery -->
+<script src="${env}/customer/assets/js/bootstrap.min.js"></script>
+

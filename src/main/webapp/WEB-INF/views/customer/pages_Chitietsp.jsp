@@ -5,105 +5,75 @@
 <fmt:setLocale value="vi_VN"/>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <title>${product != null ? product.name : 'Chi tiết sản phẩm'}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- CSS chung -->
-  <jsp:include page="/WEB-INF/views/customer/layout/css.jsp"/>
-
-  <!-- Style CHỈ cho carousel của trang này -->
-  <style>
-    /* ảnh slide */
-    #productCarousel .carousel-item img{
-      width:100%;
-      height:480px;
-      object-fit:cover;
-      border-radius:12px;
-    }
-    /* prev/next dạng nút tròn, không chiếm cả cột */
-    #productCarousel .carousel-control-prev,
-    #productCarousel .carousel-control-next{
-      width:44px;height:44px;top:50%;transform:translateY(-50%);
-      background:rgba(0,0,0,.35);border-radius:50%;opacity:.95;
-    }
-    #productCarousel .carousel-control-prev:hover,
-    #productCarousel .carousel-control-next:hover{ background:rgba(0,0,0,.5); }
-    /* icon mũi tên giữ nguyên của Bootstrap 4 */
-    #productCarousel .carousel-control-prev-icon,
-    #productCarousel .carousel-control-next-icon{ filter: invert(1) grayscale(1); }
-    /* nếu theme làm hỏng .sr-only thì ép ẩn lại */
-    #productCarousel .sr-only{
-      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;
-    }
-    /* chấm chỉ báo (dots) nhỏ, gọn */
-    #productCarousel .carousel-indicators li{
-      width:8px;height:8px;border-radius:50%;
-    }
-    /* chặn các pseudo “hình bầu dục xanh” của theme nếu có */
-    .single-product-img::before,
-    .single-product-img::after{ content:none !important; display:none !important; }
-
-    /* thumbnail */
-    .thumb{ width:80px;height:80px;object-fit:cover;cursor:pointer;border-radius:8px; }
-	
-  </style>
+  <%-- CSS --%>
+  <jsp:include page="/WEB-INF/views/customer/layout/css.jsp"></jsp:include>
 </head>
 
 <body>
+  
+  <%@ include file="/WEB-INF/views/common/variables.jsp" %>
+
+  <!-- Header + Nav -->
   <jsp:include page="/WEB-INF/views/customer/layout/header.jsp"/>
   <jsp:include page="/WEB-INF/views/customer/layout/nav.jsp"/>
 
   <div class="single-product mt-150 mb-150">
     <div class="container">
       <div class="row align-items-start">
-        <!-- ================== CỘT THÔNG TIN (TRÁI) ================== -->
+        <!-- ====== CỘT TRÁI: THÔNG TIN ====== -->
         <div class="col-lg-7 order-2 order-lg-1">
           <h2 class="mb-2">${product.name}</h2>
 
+          <c:set var="displayPrice"
+                 value="${product.salePrice != null and product.salePrice gt 0 ? product.salePrice : product.price}" />
           <div class="d-flex align-items-baseline mb-3">
             <span class="h3 text-success mb-0 mr-3">
-              <fmt:formatNumber value="${product.salePrice != null && product.salePrice gt 0 ? product.salePrice : product.price}"
-                                type="number" groupingUsed="true" minFractionDigits="0"/>đ
+              <fmt:formatNumber value="${displayPrice}" type="number" groupingUsed="true" minFractionDigits="0" />đ
             </span>
-            <c:if test="${product.salePrice != null && product.salePrice gt 0}">
+            <c:if test="${product.salePrice != null and product.salePrice gt 0}">
               <span class="text-muted">
-                <del><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" minFractionDigits="0"/>đ</del>
+                <del><fmt:formatNumber value="${product.price}" type="number" groupingUsed="true" minFractionDigits="0" />đ</del>
               </span>
             </c:if>
           </div>
 
-          <p><strong>Mô tả ngắn:</strong> ${product.shortDescription}</p>
+          <p class="mb-3"><strong>Mô tả ngắn:</strong> ${product.shortDescription}</p>
 
+          <!-- Nhập số lượng + nút thêm -->
           <div class="d-flex align-items-center mb-4">
-            <input type="number" min="1" value="1" class="form-control mr-3" style="width:110px" placeholder="Số lượng">
-            <a href="#" class="btn btn-success mr-2">
+            <input type="number" id="quantity_${product.id}" min="1" value="1"
+                   class="form-control mr-3" style="width:110px" placeholder="Số lượng"/>
+
+            <button type="button" class="btn btn-success mr-2"
+                    onclick="addToCart(
+                      ${product.id},
+                      document.getElementById('quantity_${product.id}').value,
+                      ${displayPrice},
+                      '${fn:escapeXml(product.name)}',
+                      '${fn:escapeXml(product.avatar)}'
+                    )">
               <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-            </a>
+            </button>
+
             <a href="#" class="btn btn-outline-success">
               <i class="far fa-heart"></i> Yêu thích
             </a>
           </div>
 
           <p><strong>Mô tả chi tiết:</strong> ${product.detailDescription}</p>
-<!--
-		  <h4 class="mt-4">Chia sẻ:</h4>
-		  <ul class="product-share">
-		    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-		    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-		    <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-		    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-		  </ul>
-		  -->
         </div>
 
-        <!-- ================== CỘT ẢNH (PHẢI) ================== -->
+        <!-- ====== CỘT PHẢI: ẢNH/CAROUSEL ====== -->
         <div class="col-lg-5 order-1 order-lg-2">
           <div class="single-product-img">
 
-            <%-- Chuẩn hóa URL avatar: thêm /UploadFiles/ nếu DB chỉ lưu Product/Avatar/... --%>
+            <!-- chuẩn hóa URL avatar -->
             <c:choose>
               <c:when test="${fn:startsWith(product.avatar,'/UploadFiles') || fn:startsWith(product.avatar,'UploadFiles')}">
                 <c:set var="avatarUrl" value="${product.avatar}"/>
@@ -115,25 +85,22 @@
             <c:set var="avatarUrl" value="${fn:startsWith(avatarUrl,'/') ? avatarUrl : '/'.concat(avatarUrl)}"/>
 
             <c:choose>
-              
+
               <c:when test="${empty images}">
                 <img class="img-fluid rounded shadow w-100"
                      src="<c:url value='${avatarUrl}'/>"
                      alt="${product.name}" loading="lazy">
               </c:when>
 
-              
+
               <c:otherwise>
                 <div id="productCarousel" class="carousel slide" data-ride="carousel" data-interval="3500">
                   <div class="carousel-inner">
-                    
                     <div class="carousel-item active">
                       <img src="<c:url value='${avatarUrl}'/>" class="d-block w-100" alt="${product.name}">
                     </div>
 
-                    
                     <c:forEach var="img" items="${images}">
-                      <%-- Chuẩn hóa URL ảnh con --%>
                       <c:choose>
                         <c:when test="${fn:startsWith(img.path,'/UploadFiles') || fn:startsWith(img.path,'UploadFiles')}">
                           <c:set var="imgUrl" value="${img.path}"/>
@@ -151,7 +118,7 @@
                     </c:forEach>
                   </div>
 
-                  
+                  <!-- Prev/Next -->
                   <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -161,7 +128,7 @@
                     <span class="sr-only">Next</span>
                   </a>
 
-                  <!-- Indicators -->
+                  <!-- Dots -->
                   <ol class="carousel-indicators" style="margin-bottom:-18px;">
                     <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
                     <c:forEach var="img" items="${images}" varStatus="st">
@@ -172,20 +139,18 @@
 
                 <!-- Thumbnails -->
                 <div class="d-flex flex-wrap mt-3" style="gap:8px;">
-                  <img src="<c:url value='${avatarUrl}'/>" class="thumb"
-                       data-target="#productCarousel" data-slide-to="0" alt="thumb">
+                  <img src="<c:url value='${avatarUrl}'/>" class="thumb" data-target="#productCarousel" data-slide-to="0" alt="thumb">
                   <c:forEach var="img" items="${images}" varStatus="st">
                     <c:choose>
                       <c:when test="${fn:startsWith(img.path,'/UploadFiles') || fn:startsWith(img.path,'UploadFiles')}">
-                        <c:set var="imgUrl" value="${img.path}"/>
+                        <c:set var="tUrl" value="${img.path}"/>
                       </c:when>
                       <c:otherwise>
-                        <c:set var="imgUrl" value="${'UploadFiles/'.concat(img.path)}"/>
+                        <c:set var="tUrl" value="${'UploadFiles/'.concat(img.path)}"/>
                       </c:otherwise>
                     </c:choose>
-                    <c:set var="imgUrl" value="${fn:startsWith(imgUrl,'/') ? imgUrl : '/'.concat(imgUrl)}"/>
-                    <img src="<c:url value='${imgUrl}'/>" class="thumb"
-                         data-target="#productCarousel" data-slide-to="${st.index + 1}" alt="thumb">
+                    <c:set var="tUrl" value="${fn:startsWith(tUrl,'/') ? tUrl : '/'.concat(tUrl)}"/>
+                    <img src="<c:url value='${tUrl}'/>" class="thumb" data-target="#productCarousel" data-slide-to="${st.index + 1}" alt="thumb">
                   </c:forEach>
                 </div>
               </c:otherwise>
@@ -197,25 +162,64 @@
     </div>
   </div>
 
-  <!-- ===== JS: Bootstrap 4 (KHÔNG include thêm js.jsp để tránh trùng) ===== -->
-  <script src="<c:url value='/customer/js/jquery-3.2.1.slim.min.js'/>"></script>
+  <!-- ================== JS: THỨ TỰ CHUẨN ================== -->
+  <!-- jQuery FULL (có AJAX) - chỉ 1 lần -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Popper (cho Bootstrap 4) -->
   <script src="<c:url value='/customer/js/popper.min.js'/>"></script>
+
+  <!-- Bootstrap JS (đúng 1 file, không lặp) -->
   <script src="<c:url value='/customer/js/bootstrap.min.js'/>"></script>
 
-  <!-- Ép carousel tự chạy (Bootstrap 4 dùng jQuery) -->
+  <!-- (Tuỳ) JS chung của site, nhớ SỬA file nếu có code đụng DOM null -->
+  <!-- <script src="<c:url value='/customer/js/js.js'/>"></script> -->
+  <!-- <script src="<c:url value='/customer/js/app.js'/>"></script> -->
+
+  <!-- Khởi tạo carousel (an toàn) -->
   <script>
-    $(function () {
-      $('#productCarousel').carousel({
-        interval: 3500,
-        ride: 'carousel',
-        pause: false,
-        wrap: true
-      });
+    jQuery(function($){
+      var $carousel = $('#productCarousel');
+      if ($carousel.length && $.fn.carousel) {
+        $carousel.carousel({ interval: 3500, ride: 'carousel', pause: false, wrap: true });
+      }
     });
   </script>
 
-  <!-- Các JS khác của bạn (nếu cần) -->
-  <script src="<c:url value='/customer/js/js.js'/>"></script>
-  <script src="<c:url value='/customer/js/app.js'/>"></script>
+  <!-- ADD TO CART (AJAX) -->
+  <script>
+    function addToCart(id, quantity, price, name, avatar){
+      var $ = window.jQuery;
+      if (!($ && $.ajax)) { alert('jQuery chưa sẵn sàng!'); return; }
+
+      var qty = parseInt(quantity, 10);
+      if (isNaN(qty) || qty < 1) qty = 1;
+
+      $.ajax({
+        url: '<c:url value="/add-to-cart"/>',
+        type: 'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({
+          id: id,
+          quantity: qty,
+          price: price,
+          name: name,
+          avatar: avatar
+        }),
+        dataType: 'json',
+        success: function(res){
+          if (res && typeof res.totalCartProducts !== 'undefined') {
+            $('#totalCartProducts').text(res.totalCartProducts);
+          }
+          // Optional: thông báo
+          // alert(res.code + ': ' + res.message);
+        },
+        error: function(xhr, status, err){
+          console.error('Add-to-cart lỗi:', status, err, xhr.responseText);
+          alert('Thêm giỏ hàng thất bại. Kiểm tra console.');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

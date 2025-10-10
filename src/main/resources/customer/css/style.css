@@ -240,6 +240,10 @@
   font-size: 20px;
 }
 
+.price-box { margin: 4px 0 8px; }
+.price-old { text-decoration: line-through; color: #888; margin-right: 8px; font-weight: 500; }
+.price-new { color: #e53935; font-weight: 700; }
+
 /* Right side - image with border */
 .food-image-wrapper {
   position: relative;
