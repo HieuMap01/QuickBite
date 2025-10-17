@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
 
@@ -40,7 +41,7 @@ public abstract class BaseService<Model extends BaseModel> {
 			entityManager.persist(entity); // thêm mới (INSERT) một entity vào DB.
 			return entity;
 		} else {
-			return entityManager.merge(entity);// update entity`
+			return entityManager.merge(entity);// update entity
 		}
 	}
 
@@ -72,4 +73,18 @@ public abstract class BaseService<Model extends BaseModel> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Model getEntityByNativeSQL(String sql) {
+		try {
+			Query query = entityManager.createNativeQuery(sql, clazz());
+			List<Model> list = query.getResultList();
+			if (list != null && list.size() > 0) {
+				return list.get(0);
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

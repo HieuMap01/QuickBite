@@ -25,6 +25,32 @@ body {
   align-items: center;
 }
 
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* tạo khoảng cách giữa các input */
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="password"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.auth-container input[type="text"]:focus,
+.auth-container input[type="password"]:focus {
+  outline: none;
+  border-color: #226b1f; /* màu xanh thương hiệu */
+  box-shadow: 0 0 0 3px rgba(34, 107, 31, 0.2);
+}
+
+.auth-container button {
+  margin-top: 4px; /* giữ nút gần inputs hơn một chút */
+}
 
 .auth-container {
   background-color: rgba(255, 255, 255, 0.95);

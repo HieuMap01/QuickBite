@@ -12,11 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.devpro.minhhieu.model.User;
 import vn.devpro.minhhieu.repository.UserRepository;
+import vn.devpro.minhhieu.service.BaseService;
 import vn.devpro.minhhieu.service.UserService;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService<User> implements UserService {
+
+	@Override
+	public Class<User> clazz() {
+		// TODO Auto-generated method stub
+		return User.class;
+	}
 
 	private final UserRepository userRepository;
 
@@ -58,6 +65,17 @@ public class UserServiceImpl implements UserService {
 		String sql = "SELECT * FROM tbl_user u, tbl_user_role ur, "
 				+ "tbl_role r WHERE u.id=ur.user_id AND ur.role_id = r.id AND r.name='ADMIN'";
 		return entityManager.createNativeQuery(sql, User.class).getResultList();
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public User getById(int id) {
+		// TODO Auto-generated method stub
+		return super.getById(id);
 	}
 
 }

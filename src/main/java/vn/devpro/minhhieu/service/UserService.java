@@ -13,5 +13,9 @@ public interface UserService {
 
 	List<User> findAllActive();
 
+	List<User> findAll();
+
 	List<User> findAdminUsers();
+
+	User getById(int id);
 }

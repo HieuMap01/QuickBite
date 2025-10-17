@@ -24,12 +24,13 @@ public class MailService {
 		return mailSender;
 	}
 
-	public void notifyAdminNewUser(String username, String email, String name, String mobile) {
+	public void notifyAdminNewUser(String username, String email, String name, String mobile, String address) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(from); // phải là chính spring.mail.username
 		msg.setTo(adminEmail); // mail của bạn
 		msg.setSubject("[Quickbite] New user: " + username);
-		msg.setText("Username: " + username + "\nEmail: " + email + "\nName: " + name + "\nMobile: " + mobile);
+		msg.setText("Username: " + username + "\nEmail: " + email + "\nName: " + name + "\nMobile: " + mobile
+				+ "\nAddress: " + address);
 		mailSender.send(msg);
 		System.out.println("Mail sent to admin: " + adminEmail);
 	}

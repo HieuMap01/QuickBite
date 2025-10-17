@@ -50,9 +50,9 @@
 
       <!-- ========== Cột 3: Register / Login / Wishlist / Cart ========== -->
       <div class="col-md-4 text-right d-flex justify-content-end align-items-center">
-        <a href="${env}/auth/register" class="text-white mr-1">Register</a>
+        <a href="${env}/register" class="text-white mr-1">Register</a>
         <span class="text-white">/</span>
-        <a href="${env}/auth/login" class="text-white ml-1">Login</a>
+        <a href="${env}/login" class="text-white ml-1">Login</a>
 
         <!-- ===== Wishlist ===== -->
         <a href="${env}/wishlist" class="text-white position-relative mx-3">
