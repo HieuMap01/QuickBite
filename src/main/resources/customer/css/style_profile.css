@@ -1,0 +1,25 @@
+#profile-section {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+#profile-section h2 {
+  color: #226b1f;
+}
+
+#profile-section label {
+  color: #2f7a2b;
+}
+
+#profile-section .btn-success {
+  background-color: #226b1f;
+  border-color: #226b1f;
+  transition: all 0.2s ease;
+}
+
+#profile-section .btn-success:hover {
+  background-color: #2f7a2b;
+  border-color: #2f7a2b;
+}

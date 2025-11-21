@@ -1,0 +1,3 @@
+/target/
+# Ignore Spring application properties with secrets
+/src/main/resources/application-secret.properties

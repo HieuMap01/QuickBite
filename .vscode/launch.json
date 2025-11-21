@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-quickbiteStarter<quickbite>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "vn.devpro.minhhieu.quickbiteStarter",
+            "projectName": "quickbite",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

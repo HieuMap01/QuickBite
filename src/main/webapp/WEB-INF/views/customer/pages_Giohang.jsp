@@ -168,6 +168,66 @@
 
       </div>
     </div>
+    <div class="col-12 mt-3">
+      <label>Phương thức thanh toán</label>
+      <div>
+        <label><input type="radio" name="paymentMethod" value="cod" checked> Thanh toán khi nhận hàng (COD)</label>
+        &nbsp;&nbsp;
+        <label><input type="radio" name="paymentMethod" value="vnpay"> Thanh toán bằng VNPAY</label>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3">
+      <a href="<c:url value='/index'/>" class="btn btn-outline-qb mr-2">Quay lại shop</a>
+      <button class="btn btn-qb" onclick="_placeOrder()">Đặt hàng</button>
+    </div>
+    <script>
+    // ...existing helper fns...
+    
+    function _placeOrder() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const data = {
+        customerName:   jQuery("#txtName").val(),
+        customerEmail:  jQuery("#txtEmail").val(),
+        customerMobile: jQuery("#txtMobile").val(),
+        customerAddress:jQuery("#txtAddress").val()
+      };
+    
+      if (paymentMethod === 'cod') {
+        // flow cũ: gọi endpoint đặt hàng bình thường
+        jQuery.ajax({
+          url: "<c:url value='/customer/orders/place'/>",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          dataType: "json",
+          success: function (jsonResult) {
+            alert((jsonResult.code || "OK") + ": " + (jsonResult.message || "Đặt hàng thành công"));
+            window.location.href = "<c:url value='/cart'/>";
+          },
+          error: function () { alert("Có lỗi khi đặt hàng"); }
+        });
+      } else {
+        // VNPAY flow: tạo order & lấy URL thanh toán
+        jQuery.ajax({
+          url: "<c:url value='/customer/orders/create-vnpay'/>",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(data),
+          dataType: "json",
+          success: function (res) {
+            if (res && res.code === 200 && res.payUrl) {
+              // redirect user to VNPAY
+              window.location.href = res.payUrl;
+            } else {
+              alert("Tạo yêu cầu VNPAY thất bại: " + (res.message || ""));
+            }
+          },
+          error: function () { alert("Lỗi kết nối VNPAY"); }
+        });
+      }
+    }
+    </script>
   </main>
 
   <!-- FOOTER (tuỳ) -->
@@ -235,14 +295,14 @@
     });
   }
 
-  // --- Đặt hàng: tên field & endpoint y như của thầy ---
+  <!-- // --- Đặt hàng: tên field & endpoint y như của thầy ---
   function _placeOrder() {
     const data = {
       customerName:   jQuery("#txtName").val(),
       customerEmail:  jQuery("#txtEmail").val(),
       customerMobile: jQuery("#txtMobile").val(),
       customerAddress:jQuery("#txtAddress").val()
-    };
+    }; 
 
     jQuery.ajax({
       url: "<c:url value='/customer/orders/place'/>",
@@ -260,7 +320,7 @@
         alert("Có lỗi khi đặt hàng");
       }
     });
-  }
+  } -->
 </script>
 
 </body>
