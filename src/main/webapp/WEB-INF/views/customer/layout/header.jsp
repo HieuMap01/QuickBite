@@ -3,41 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
-
-<!--
-<%-- Nếu chưa có biến env (trường hợp trang cha quên include), tự tạo --%>
-<c:if test="${empty env}">
-  <c:set var="env" value="${pageContext.request.contextPath}" scope="request" />
-</c:if>
-
-<%-- ===== Fallback tính số lượng giỏ hàng từ session nếu model không có ===== --%>
-<c:set var="cart" value="${empty cart ? sessionScope.cart : cart}" />
-<c:set var="sumQty" value="0" />
-<c:if test="${not empty cart and not empty cart.cartProducts}">
-  <c:forEach var="p" items="${cart.cartProducts}">
-    <c:set var="sumQty" value="${sumQty + p.quantity}" />
-  </c:forEach>
-</c:if>
--->
 
 
 <header class="bg-custom text-white py-1">
   <div class="container">
     <div class="row align-items-center">
 
-      <!-- ========== Cột 1: Search ========== -->
-      <div class="col-md-4 search-container bg-custom p-2">
-        <div class="input-group">
-          <input type="text" id="searchInput" class="form-control search-input text-white" placeholder="Search here">
-          <div class="input-group-append">
-            <button class="btn search-btn" id="searchBtn">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+		<!-- ========== Cột 1: Search ========== -->
+		<div class="col-md-4 search-container bg-custom p-2">
+			<form action="${env}/service/search" method="get" class="w-100">
+			  <div class="input-group">
+			    <input type="text" name="q" class="form-control" placeholder="Search here" required />
+			    <div class="input-group-append">
+			      <button type="submit" class="btn search-btn"><i class="fas fa-search"></i></button>
+			    </div>
+			  </div>
+			</form>
+
+		</div>
 
       <!-- ========== Cột 2: Logo (giữa) ========== -->
       <div class="col-md-4 text-center">
@@ -50,9 +36,45 @@
 
       <!-- ========== Cột 3: Register / Login / Wishlist / Cart ========== -->
       <div class="col-md-4 text-right d-flex justify-content-end align-items-center">
-        <a href="${env}/register" class="text-white mr-1">Register</a>
-        <span class="text-white">/</span>
-        <a href="${env}/login" class="text-white ml-1">Login</a>
+		<!-- Anonymous: hiện Register / Login -->
+		<sec:authorize access="isAnonymous()">
+		  <a href="${env}/register" class="text-white mr-1">Register</a>
+		  <span class="text-white">/</span>
+		  <a href="${env}/login" class="text-white ml-1">Login</a>
+		</sec:authorize>
+
+		<!-- Authenticated: hiện avatar + dropdown -->
+		<%--<sec:authorize access="isAuthenticated()">
+		  <c:set var="avatarUrl" value="${empty currentUser || empty currentUser.avatar ? 
+		    env.concat('/customer/assets/Home/images/avatar-default.png') 
+		    : currentUser.avatar }" />--%>
+		<sec:authorize access="isAuthenticated()">
+			    <c:set var="avatarUrl" value="/customer/assets/Home/images/avatar-default.png" />
+		
+
+		  
+		  <div class="dropdown mx-3">
+		    <a class="d-flex align-items-center text-white dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration:none;">
+		      <img src="${avatarUrl}" alt="Avatar" class="qb-avatar mr-2">
+		      <span class="d-none d-sm-inline">
+		        <sec:authentication property="principal.username"/>
+		      </span>
+		    </a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+
+			  <a class="dropdown-item nav-link" href="${env}/account/profile">Thông tin cá nhân</a>
+			  <a class="dropdown-item nav-link" href="${env}/account/orders">Đơn hàng của tôi</a>
+
+			  <div class="dropdown-divider"></div>
+
+			  <form action="${env}/logout" method="post" class="m-0">
+			    <button type="submit" class="dropdown-item nav-link text-danger">Đăng xuất</button>
+			  </form>
+
+			</div>
+
+		  </div>
+		</sec:authorize>
 
         <!-- ===== Wishlist ===== -->
         <a href="${env}/wishlist" class="text-white position-relative mx-3">

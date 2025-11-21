@@ -131,19 +131,19 @@
                     <div class="row">
                       <div class="col-md-6">
                         <label>Họ tên</label>
-                        <input type="text" id="txtName" class="form-control" value="${loginedUser.name}"/>
+                        <input type="text" id="txtName" class="form-control" value="${currentUser.name}"/>
                       </div>
                       <div class="col-md-6">
                         <label>Điện thoại</label>
-                        <input type="text" id="txtMobile" class="form-control" value="${loginedUser.mobile}"/>
+                        <input type="text" id="txtMobile" class="form-control" value="${currentUser.mobile}"/>
                       </div>
                       <div class="col-md-6 mt-2">
                         <label>Email</label>
-                        <input type="email" id="txtEmail" class="form-control" value="${loginedUser.email}"/>
+                        <input type="email" id="txtEmail" class="form-control" value="${currentUser.email}"/>
                       </div>
                       <div class="col-md-6 mt-2">
                         <label>Địa chỉ</label>
-                        <input type="text" id="txtAddress" class="form-control" value="${loginedUser.address}"/>
+                        <input type="text" id="txtAddress" class="form-control" value="${currentUser.address}"/>
                       </div>
                       <div class="col-12 mt-3">
                         <a href="<c:url value='/index'/>" class="btn btn-outline-qb mr-2">Quay lại shop</a>
@@ -245,7 +245,7 @@
     };
 
     jQuery.ajax({
-      url: "<c:url value='/place-order'/>",
+      url: "<c:url value='/customer/orders/place'/>",
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(data),

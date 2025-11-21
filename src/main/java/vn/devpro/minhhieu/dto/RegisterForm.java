@@ -7,11 +7,11 @@ import javax.validation.constraints.Size;
 
 public class RegisterForm {
 	@NotBlank
-	@Size(min = 4, max = 120)
+	@Size(min = 2, max = 120, message = "username must be between 2 and 120 characters")
 	private String username;
 
 	@NotBlank
-	@Size(min = 6, max = 120)
+	@Size(min = 2, max = 120, message = "password must be between 3 and 120 characters")
 	private String password;
 
 	@NotBlank
@@ -20,6 +20,8 @@ public class RegisterForm {
 
 	private String name;
 	private String mobile;
+	private String address;
+	private String confirmPassword;
 
 	public String getUsername() {
 		return username;
@@ -59,6 +61,22 @@ public class RegisterForm {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

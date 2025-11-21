@@ -100,6 +100,35 @@
   margin-bottom: 30px;
 }
 
+.qb-avatar{
+  width:32px; height:32px; border-radius:50%;
+  object-fit:cover; display:inline-block; background:#fff;
+  border:2px solid rgba(255,255,255,.6);
+}
+.dropdown-menu .nav-link {
+  display: block;
+  padding: 8px 16px;
+  text-align: left;
+  color: #226b1f; /* màu xanh nhạt giống nav */
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu .nav-link:hover {
+  color: #2f7a2b; /* xanh đậm hơn khi hover */
+  background-color: #f8f9fa; /* nền nhẹ */
+}
+
+.dropdown-menu .text-danger {
+  color: #dc3545 !important; /* màu đỏ cho “Đăng xuất” */
+}
+
+.dropdown-menu .text-danger:hover {
+  color: #b02a37 !important; /* đỏ đậm hơn khi hover */
+  background-color: #f8f9fa;
+}
+
+
 .button-group {
   display: flex;
   gap: 10px;

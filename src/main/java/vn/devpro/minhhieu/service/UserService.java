@@ -18,4 +18,9 @@ public interface UserService {
 	List<User> findAdminUsers();
 
 	User getById(int id);
+
+	User findByUsername(String username);
+
+	void updateProfile(String username, User formUser);
+
 }

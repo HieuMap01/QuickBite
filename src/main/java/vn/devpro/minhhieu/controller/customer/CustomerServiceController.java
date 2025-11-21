@@ -44,6 +44,30 @@ public class CustomerServiceController extends BaseController {
 		return "customer/pages_Service";
 	}
 
+	@GetMapping("/search")
+	public String searchService(@RequestParam(value = "q", required = false) String q,
+			@RequestParam(value = "catId", required = false, defaultValue = "0") Integer catId, Model model) {
+
+		// Build điều kiện tìm kiếm giống Admin nhưng dành cho khách
+		vn.devpro.minhhieu.dto.ProductSearch s = new vn.devpro.minhhieu.dto.ProductSearch();
+		s.setStatus(1); // chỉ lấy sản phẩm Active cho trang customer
+		s.setCategoryId(catId == null ? 0 : catId);
+		s.setKeyword((q != null && !q.trim().isEmpty()) ? q.trim() : null);
+
+		// Tuỳ bạn có muốn phân trang DB tại đây hay không (setFirstResult/MaxResults
+		// trong ps.search)
+		java.util.List<vn.devpro.minhhieu.model.Product> products = ps.search(s);
+
+		// Data cho view
+		model.addAttribute("categories", cs.findAllActive());
+		model.addAttribute("activeCatId", s.getCategoryId());
+		model.addAttribute("keyword", s.getKeyword());
+		model.addAttribute("products", products);
+
+		// Trả về trang service của customer
+		return "customer/pages_Service";
+	}
+
 //	@RequestMapping(value = { "/product/{productId}" }, method = RequestMethod.GET)
 //	public String home(final Model model, @PathVariable("productId") int productId) {
 //

@@ -46,8 +46,9 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User save(User user) {
-		return userRepository.save(user);
+		return saveOrUpdate(user);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -76,6 +77,36 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 	public User getById(int id) {
 		// TODO Auto-generated method stub
 		return super.getById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username).orElse(null);
+		// Nếu không muốn dùng repository, có thể dùng JPQL:
+		// try {
+		// return entityManager.createQuery(
+		// "SELECT u FROM User u WHERE u.username = :u", User.class)
+		// .setParameter("u", username)
+		// .setMaxResults(1)
+		// .getSingleResult();
+		// } catch (NoResultException e) { return null; }
+	}
+
+	@Override
+	@Transactional
+	public void updateProfile(String username, User formUser) {
+		User current = userRepository.findByUsername(username)
+				.orElseThrow(() -> new RuntimeException("User not found"));
+
+		// Cập nhật các trường cho phép thay đổi
+		current.setName(formUser.getName());
+		current.setMobile(formUser.getMobile());
+		current.setEmail(formUser.getEmail());
+		current.setAddress(formUser.getAddress());
+
+		// Không đụng tới password, username, role, status...
+		userRepository.save(current);
 	}
 
 }

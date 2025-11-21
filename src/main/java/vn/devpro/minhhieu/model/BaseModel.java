@@ -56,11 +56,11 @@ public abstract class BaseModel {
 		this.createDate = createDate;
 	}
 
-	public Date getupdateDate() {
+	public Date getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setupdateDate(Date updateDate) {
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
 

@@ -79,7 +79,7 @@ public class User extends BaseModel implements UserDetails {
 		this.address = address;
 		this.avatar = avatar;
 		this.description = description;
-		status = status2;
+		this.status = status2;
 		this.roles = roles;
 	}
 
