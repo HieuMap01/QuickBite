@@ -192,6 +192,7 @@
         customerMobile: jQuery("#txtMobile").val(),
         customerAddress:jQuery("#txtAddress").val()
       };
+      
     
       if (paymentMethod === 'cod') {
         // flow cũ: gọi endpoint đặt hàng bình thường
